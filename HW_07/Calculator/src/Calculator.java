@@ -1,4 +1,4 @@
-public final class Calculator implements iCalculable, iCalcComplex {
+public final class Calculator implements iCalculable, iOperationComplexNum{
 
     private int primaryArg;
 
@@ -23,22 +23,32 @@ public final class Calculator implements iCalculable, iCalcComplex {
         return primaryArg;
     }
 
-    // методы для работы с комплексными числами
+
+
+    /**
+     * Реализация интерфейса для работы с комплексными числами
+     */
     @Override
-    public iCalcComplex sumX(int arg) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sumX'");
+    public ComplexNumber addition(ComplexNumber a, ComplexNumber b) {
+        return new ComplexNumber(a.getReal() + b.getReal(), a.getImaginary() + b.getImaginary());
     }
 
     @Override
-    public iCalcComplex multiX(int arg) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'multiX'");
+    public ComplexNumber multipl(ComplexNumber a, ComplexNumber b) {
+        return new ComplexNumber(a.getReal() * b.getReal() - a.getImaginary() * b.getImaginary(),
+        a.getReal() * b.getImaginary() + a.getImaginary() * b.getReal());
     }
 
     @Override
-    public iCalcComplex divX(int arg) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'divX'");
+    public ComplexNumber divis(ComplexNumber a, ComplexNumber b) {
+        // Вычисляем знаменатель
+        double denominator = b.getReal() * b.getReal() + b.getImaginary() * b.getImaginary();
+        // Вычисляем действительную часть результата
+        double real = (a.getReal() * b.getReal() + a.getImaginary() * b.getImaginary()) / denominator;
+        // Вычисляем мнимую часть результата
+        double imaginary = (a.getImaginary() * b.getReal() - a.getReal() * b.getImaginary()) / denominator;
+        // Возвращаем новое комплексное число
+        return new ComplexNumber(real, imaginary);
     }
+    
 }
